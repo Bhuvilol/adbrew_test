@@ -1,8 +1,7 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-import json, logging, os
+import logging, os
 from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
