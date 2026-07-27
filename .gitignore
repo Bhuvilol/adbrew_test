@@ -1,0 +1,19 @@
+# MongoDB data files (bind-mounted, generated at runtime)
+src/db/
+
+# API bind-mount scratch dir
+src/tmp/
+
+# Python bytecode cache
+**/__pycache__/
+*.py[cod]
+
+# Stray/empty artifact — Mongo is the actual datastore, not used
+src/rest/mydatabase
+
+# Editor
+.vscode/
+.idea/
+
+# Frontend lint cache
+src/app/.eslintcache

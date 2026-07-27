@@ -1,7 +1,19 @@
 # set base image (host OS)
-FROM python:3.8
+FROM python:3.8-buster
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
+# Debian buster is EOL; deb.debian.org no longer serves it live. Use the
+# frozen snapshot mirror the base image itself references (commented out)
+# for this exact date, and disable the Valid-Until check since a frozen
+# snapshot's Release file has a fixed expiry in the past.
+RUN printf '%s\n' \
+      'deb http://snapshot.debian.org/archive/debian/20230612T000000Z buster main' \
+      'deb http://snapshot.debian.org/archive/debian-security/20230612T000000Z buster/updates main' \
+      'deb http://snapshot.debian.org/archive/debian/20230612T000000Z buster-updates main' \
+      > /etc/apt/sources.list \
+ && echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
+
 
 RUN apt-get -y update
 RUN apt-get install -y curl nano wget nginx git
@@ -19,9 +31,6 @@ RUN apt-get install -y mongodb-org
 
 # Install Yarn
 RUN apt-get install -y yarn
-
-# Install PIP
-RUN easy_install pip
 
 
 ENV ENV_TYPE staging
